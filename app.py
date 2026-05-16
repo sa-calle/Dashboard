@@ -15,18 +15,56 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilo visual
+# Estilo visual personalizado con la nueva paleta de colores
 st.markdown("""
 <style>
+    /* Ajuste de contenedor principal */
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
+    
+    /* Cambiar el fondo del Sidebar al color oscuro #254b5e */
+    [data-testid="stSidebar"] {
+        background-color: #254b5e;
+    }
+    [data-testid="stSidebar"] .role-heading, [data-testid="stSidebar"] p, [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] label {
+        color: #ffffff !important;
+    }
+
+    /* Estilo para los subtítulos de las secciones con #255f7a */
+    h2, h3 {
+        color: #255f7a !important;
+        font-weight: 600;
+        border-left: 5px solid #1989b6;
+        padding-left: 10px;
+    }
+
+    /* Tarjetas Métricas Personalizadas utilizando #009fd6 con transparencia y texto #227498 */
     .stMetric {
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 10px;
+        background-color: #009fd610; /* Color cyan con 10% de opacidad para fondo suave */
+        padding: 15px;
+        border-radius: 12px;
         text-align: center;
+        border: 1px solid #1989b640;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    /* Color de los números dentro de las métricas con #227498 */
+    [data-testid="stMetricValue"] {
+        color: #227498 !important;
+        font-weight: bold !important;
+    }
+    
+    /* Color de las etiquetas de las métricas */
+    [data-testid="stMetricLabel"] {
+        color: #254b5e !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* Líneas de división estilizadas con #1989b6 */
+    hr {
+        border-color: #1989b630 !important;
     }
 </style>
 """, unsafe_allow_html=True)
