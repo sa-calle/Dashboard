@@ -15,72 +15,86 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilo visual personalizado con la nueva paleta de colores
+# Estilo visual imitando el dashboard moderno
 st.markdown("""
 <style>
-    /* Ajuste de contenedor principal */
+    /* Fondo principal de la aplicación */
+    .stApp {
+        background-color: #f4f7fe;
+    }
+
+    /* Padding superior */
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
     
-    /* Cambiar el fondo del Sidebar al color oscuro #254b5e */
+    /* Menú lateral (Sidebar) oscuro como en la imagen */
     [data-testid="stSidebar"] {
-        background-color: #254b5e;
+        background-color: #171721;
     }
-    [data-testid="stSidebar"] .role-heading, [data-testid="stSidebar"] p, [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] label {
-        color: #ffffff !important;
+    /* Texto del menú lateral en blanco/gris claro */
+    [data-testid="stSidebar"] .role-heading, 
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3, 
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] div {
+        color: #e2e8f0 !important;
     }
 
-    /* Estilo para los subtítulos de las secciones con #255f7a */
-    h2, h3 {
-        color: #255f7a !important;
-        font-weight: 600;
-        border-left: 5px solid #1989b6;
-        padding-left: 10px;
+    /* Títulos principales */
+    h1, h2, h3 {
+        color: #2b3674 !important;
+        font-weight: 700 !important;
     }
 
-    /* Tarjetas Métricas Personalizadas utilizando #009fd6 con transparencia y texto #227498 */
+    /* Diseño de las tarjetas (Métricas) */
     .stMetric {
-        background-color: #009fd610; /* Color cyan con 10% de opacidad para fondo suave */
-        padding: 15px;
-        border-radius: 12px;
-        text-align: center;
-        border: 1px solid #1989b640;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        background-color: #ffffff;
+        padding: 20px 25px;
+        border-radius: 20px; /* Bordes muy redondeados */
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05); /* Sombra suave */
+        border: none;
+        margin-bottom: 10px;
     }
     
-    /* Color de los números dentro de las métricas con #227498 */
+    /* Color y tamaño de los números en las tarjetas */
     [data-testid="stMetricValue"] {
-        color: #227498 !important;
-        font-weight: bold !important;
+        color: #2b3674 !important;
+        font-size: 28px !important;
+        font-weight: 700 !important;
     }
     
-    /* Color de las etiquetas de las métricas */
+    /* Color de las etiquetas (títulos pequeños) de las tarjetas */
     [data-testid="stMetricLabel"] {
-        color: #254b5e !important;
-        font-size: 0.95rem !important;
+        color: #a3aed1 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
-    /* Líneas de división estilizadas con #1989b6 */
+    /* Líneas de división más sutiles */
     hr {
-        border-color: #1989b630 !important;
+        border-color: #e2e8f0 !important;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("Diseño de Pavimento Flexible - Método AASHTO")
+st.title("Dashboard de Pavimentos")
 
 # =========================================
 # SIDEBAR
 # =========================================
 st.sidebar.header("Parámetros de entrada")
 
-# Tránsito
 st.sidebar.subheader("Tránsito")
 W_18 = st.sidebar.number_input("W18 (ESAL)", value=1.8e6, format="%.2e")
 
-# Parámetros AASHTO
 st.sidebar.subheader("Parámetros AASHTO")
 confiabilidad = st.sidebar.number_input("Zr", value=-1.282)
 error_estandar = st.sidebar.number_input("S0", value=0.45)
@@ -88,21 +102,18 @@ Po = st.sidebar.number_input("Po", value=4.2)
 Pf = st.sidebar.number_input("Pf", value=2.2)
 dpsi = Po - Pf
 
-# Materiales
 st.sidebar.subheader("Módulos resilientes")
 Mr_subrasante = st.sidebar.number_input("MR Subrasante (psi)", value=12000)
 Mr_subbase = st.sidebar.number_input("MR Subbase (psi)", value=15000)
 Mr_base = st.sidebar.number_input("MR Base (psi)", value=27000)
 MR_asfalto = st.sidebar.number_input("MR Asfalto", value=3.83e5)
 
-# Drenaje
 st.sidebar.subheader("Drenaje")
 calidad = st.sidebar.selectbox(
     "Calidad de drenaje",
     ["excellent", "good", "fair", "poor", "very_poor"]
 )
 porcentaje = st.sidebar.number_input("Saturación (%)", value=15.0)
-
 usar_manual = st.sidebar.checkbox("Definir m2 y m3 manualmente")
 
 # =========================================
@@ -117,13 +128,9 @@ else:
     m2 = (rango[0] + rango[1]) / 2
     m3 = m2
 
-# =========================================
-# SECCIÓN: DRENAJE
-# =========================================
 with st.container():
-    st.subheader("Drenaje")
+    st.subheader("Análisis de Drenaje")
     col1, col2, col3 = st.columns(3)
-
     col1.metric("Categoría", categoria)
     col2.metric("Rango", f"{rango}")
     col3.metric("Coeficiente usado", f"{m2:.3f}")
@@ -131,58 +138,20 @@ with st.container():
 st.divider()
 
 # =========================================
-# SN
+# CÁLCULOS
 # =========================================
 SN3 = calcular_sn(W_18, confiabilidad, error_estandar, dpsi, Mr_subrasante)
 SN2 = calcular_sn(W_18, confiabilidad, error_estandar, dpsi, Mr_subbase)
 SN1 = calcular_sn(W_18, confiabilidad, error_estandar, dpsi, Mr_base)
 
-with st.container():
-    st.subheader("Número estructural (SN)")
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("Subrasante", f"{SN3:.2f}")
-    col2.metric("Subbase", f"{SN2:.2f}")
-    col3.metric("Base", f"{SN1:.2f}")
-
-st.divider()
-
-# =========================================
-# COEFICIENTES
-# =========================================
 a1 = 0.184 * np.log(MR_asfalto) - 1.9547
 a2 = 0.249 * np.log10(Mr_base) - 0.977
 a3 = 0.227 * np.log10(Mr_subbase) - 0.839
 
-with st.container():
-    st.subheader("Coeficientes estructurales")
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("a1", f"{a1:.3f}")
-    col2.metric("a2", f"{a2:.3f}")
-    col3.metric("a3", f"{a3:.3f}")
-
-st.divider()
-
-# =========================================
-# ESPESORES MÍNIMOS
-# =========================================
 h1_min, h2_min = espesores_minimos(W_18)
 h1_min_cm = in_a_cm_constructivo(h1_min)
 h2_min_cm = in_a_cm_constructivo(h2_min)
 
-with st.container():
-    st.subheader("Espesores mínimos")
-    col1, col2 = st.columns(2)
-
-    col1.metric("Carpeta (cm)", f"{h1_min_cm:.2f}")
-    col2.metric("Base (cm)", f"{h2_min_cm:.2f}")
-
-st.divider()
-
-# =========================================
-# CÁLCULO DE ESPESORES
-# =========================================
 h1 = SN1 / a1
 if h1 < h1_min:
     h1 = h1_min
@@ -203,12 +172,18 @@ h3 = (SN3 - SN2) / (a3 * m3)
 h3 = (h3 * 2.54 + 1).round(0)
 
 # =========================================
-# RESULTADOS
+# SECCIÓN: RESULTADOS TIPO TARJETAS
 # =========================================
 with st.container():
-    st.subheader("Resultados finales")
+    st.subheader("Resultados Estructurales (SN)")
     col1, col2, col3 = st.columns(3)
+    col1.metric("SN Subrasante", f"{SN3:.2f}")
+    col2.metric("SN Subbase", f"{SN2:.2f}")
+    col3.metric("SN Base", f"{SN1:.2f}")
 
-    col1.metric("Carpeta (cm)", f"{h1:.2f}")
-    col2.metric("Base (cm)", f"{h2:.2f}")
-    col3.metric("Subbase (cm)", f"{h3:.2f}")
+with st.container():
+    st.subheader("Diseño Final de Espesores")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Carpeta Asfáltica", f"{h1:.2f} cm")
+    col2.metric("Base Granular", f"{h2:.2f} cm")
+    col3.metric("Subbase Granular", f"{h3:.2f} cm")
