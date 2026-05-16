@@ -38,15 +38,100 @@ def calcular_sn(w18, zr, s0, delta_psi, mr):
     
     return resultado[0]
 
-def Calcular_D(W_18,Zr,So,D,dela_psi,pf,Mr,Cd,J,Ec,K):
+def Calcular_D(W_18, Zr, So, dela_psi, pf, Mr, Cd, J, Ec, K):
+
     def ecuacion(D):
-        termino_base = Zr*So+7.35*np.log10(D+1)-0.06
-        termino_psi = (np.log10(dela_psi/(4.5-1.5)))/(1+((1.624e7)/((D+1)**8.46)))
-        termino_3 = (4.22-0.32*pf)*np.log10((Mr*Cd*(D**0.75-1.132))/(215.63*J*((D**0.75)-((18.42)/((Ec/K)**0.25)))))
-        return (termino_base + termino_psi + termino_3) - np.log10(W_18)
-    D_inicial = 3  # Valor inicial pequeño
+        termino_base = (
+            Zr * So + 7.35 * np.log10(D + 1) - 0.06
+        )
+
+        termino_psi = (
+            np.log10(dela_psi / (4.5 - 1.5))
+            /
+            (1 + ((1.624e7) / ((D + 1) ** 8.46)))
+        )
+
+        numerador = (Mr * Cd * ((D ** 0.75) - 1.132))
+
+        denominador = (
+            215.63
+            * J
+            * (
+                (D ** 0.75)
+                -
+                (
+                    18.42
+                    /
+                    ((Ec / K) ** 0.25)
+                )
+            )
+        )
+
+        # Protección contra números negativos
+        if numerador <= 0 or denominador <= 0:
+            return 1e10
+
+        termino_3 = (
+            (4.22 - 0.32 * pf)
+            *
+            np.log10(numerador / denominador)
+        )
+
+        return (
+            termino_base
+            + termino_psi
+            + termino_3
+            - np.log10(W_18)
+        )
+
+    limite_inferior_matematico = (18.42 / ((Ec / K) ** 0.25)) ** (1 / 0.75)
+    
+    D_inicial = limite_inferior_matematico + 1.0
+
     resultado = fsolve(ecuacion, D_inicial)
+
     return resultado[0]
+
+def obtener_serviciabilidad_final_D(tipo_via):
+    valores_pf = {
+        "Autopista": 3.0,
+        "Colectoras": 2.5,
+        "Calles comerciales": 2.25,
+        "Calles residenciales": 2.0
+    }
+    return valores_pf.get(tipo_via, "Error: Tipo de vía no encontrado")
+
+def coeficiente_drenaje_rango_D(calidad, porcentaje):
+    calidad = calidad.lower().strip()
+
+    if porcentaje < 1:
+        col = 0
+        categoria = "<1%"
+    elif porcentaje <= 5:
+        col = 1
+        categoria = "1-5%"
+    elif porcentaje <= 25:
+        col = 2
+        categoria = "5-25%"
+    else:
+        col = 3
+        categoria = ">25%"
+
+    tabla = {
+        "excelente": [(1.25, 1.20), (1.20, 1.15), (1.15, 1.10), (1.10, 1.10)],
+        "bueno": [(1.20, 1.15), (1.15, 1.10), (1.10, 1.00), (1.00, 1.00)],
+        "regular": [(1.15, 1.10), (1.10, 1.00), (1.00, 0.90), (0.90, 0.90)],
+        "pobre": [(1.10, 1.00), (1.00, 0.90), (0.90, 0.80), (0.80, 0.80)],
+        "muy malo": [(1.00, 0.90), (0.90, 0.80), (0.80, 0.70), (0.70, 0.70)]
+    }
+
+    if calidad not in tabla:
+        raise ValueError(f"Calidad de drenaje '{calidad}' no válida.")
+
+    rango = tabla[calidad][col]
+    return rango, categoria
+
+
 
 
 
