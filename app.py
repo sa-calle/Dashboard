@@ -39,6 +39,9 @@ st.markdown("""
     /* Títulos y texto general */
     h1, h2, h3, p, li { color: #2b3674 !important; font-weight: 700 !important; }
     
+    /* Forzar color oscuro en las fórmulas matemáticas (KaTeX) */
+    .katex * { color: #2b3674 !important; font-weight: bold !important; }
+    
     /* Tarjetas de métricas */
     .stMetric {
         background-color: #ffffff; padding: 20px 25px;
@@ -293,9 +296,6 @@ else:
     
     with st.expander("Ver Tablas Guía de Diseño Rígido (Desplegar)"):
         
-        # ==========================================================
-        # ESTA TABLA Y SUS FÓRMULAS AHORA SON LAS PRIMERAS (#1)
-        # ==========================================================
         st.write("### 1. Estimación del Módulo de Reacción (K) mediante CBR y Efecto de la Subbase")
         st.markdown("Fórmulas para estimar empíricamente el valor del módulo de reacción de la subrasante **$K$ (en MPa/m)** basándose en el ensayo CBR del suelo:")
         st.latex(r"K = 2.55 + 52.5 \times \log_{10}(CBR) \quad \text{para } CBR \le 10")
@@ -317,7 +317,6 @@ else:
         st.table(df_k_subbase)
         st.info("Nota: Lb/pulg³ equivale a **pci** (pounds per cubic inch). Esta tabla muestra cómo el módulo de reacción combinado (efectivo) del sistema de soporte se eleva al colocar capas granulares de subbase (100 a 300 mm) sobre la subrasante natural.")
 
-        # CONTINUACIÓN DE LAS DEMÁS TABLAS RE-NUMERADAS
         st.write("### 2. Factor de distribución por carril (FDC)")
         df_fdc_rigido = pd.DataFrame({
             "Número de carriles": ["1", "2", "3", "4"],
@@ -413,9 +412,7 @@ else:
         **Nota:** Si se usa barra lisa en vez de corrugada: $L_{nueva} = 1.5L$
         """)
 
-        st.write("### 10. Criterios de longitud máxima de losa")
-        st.info("""
-        * **Lmax = 1.25b**
-        * **Lmax = 25h**
-        * **Lmax = 6 m**
-        """)
+        st.write("### 11. Criterios de longitud máxima de losa")
+        st.latex(r"L_{max} = 1.25 \times b")
+        st.latex(r"L_{max} = 25 \times h")
+        st.latex(r"L_{max} = 6 \text{ m}")
