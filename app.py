@@ -368,20 +368,10 @@ else:
         """)
 
         st.write("### 10. Criterios de longitud máxima de losa")
-        st.latex(r"L_{max} = 1.25 \times b")
-        st.latex(r"L_{max} = 25 \times h")
-        st.latex(r"L_{max} = 6 \text{ m}")
-
-        st.write("### 11. Variables Ecuación de diseño AASHTO Rígido")
-        st.markdown("""
-        * **$D$**: Espesor de la losa de concreto (pulgadas)
-        * **$W_{18}$**: Número estimado de ejes equivalentes de 18 kips (ESALs)
-        * **$Z_R$**: Desviación estándar normal (Confiabilidad)
-        * **$S_o$**: Error estándar combinado
-        * **$\Delta PSI$**: Pérdida de serviciabilidad ($P_o - P_f$)
-        * **$J$**: Coeficiente de transferencia de carga
-        * **$C_d$**: Coeficiente de drenaje
-        * **$E_c$**: Módulo de elasticidad del concreto (psi)
-        * **$S'_c$ (o MR)**: Módulo de rotura del concreto (psi)
-        * **$k$**: Módulo de reacción de la subrasante (pci)
+        st.info("""
+        **Nota de diseño:** La tabla para el cálculo de barras de anclaje depende de múltiples variables constructivas:
+        * **Lmax = 1.25b**
+        * **Lmax = 25h**
+        * **Lmax = 6 m**
         """)
+
