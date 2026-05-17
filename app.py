@@ -6,7 +6,6 @@ import pandas as pd
 # =========================================
 # IMPORTACIONES DE TUS MÓDULOS
 # =========================================
-# Asegúrate de que todas estas funciones existan en tu archivo Modulos.py
 from Modulos import (
     calcular_sn,
     espesores_minimos,
@@ -50,20 +49,24 @@ st.markdown("""
     [data-testid="stMetricLabel"] { color: #a3aed1 !important; font-size: 14px !important; font-weight: 500 !important; text-transform: uppercase; }
     hr { border-color: #e2e8f0 !important; margin-top: 2rem; margin-bottom: 2rem; }
     
-    /* Estilos corregidos para las tablas */
+    /* =========================================
+       ESTILOS DEFINITIVOS PARA TABLAS
+       ========================================= */
     div[data-testid="stTable"] { margin-bottom: 2rem; }
     
-    table tbody tr td {
+    /* Forzar color en celdas normales (cuerpo de la tabla) */
+    [data-testid="stTable"] td, 
+    [data-testid="stTable"] td * {
         background-color: #ffffff !important;
         color: #171721 !important; 
-        border-bottom: 1px solid #e2e8f0 !important;
     }
     
-    table thead tr th {
+    /* Forzar color en encabezados de la tabla */
+    [data-testid="stTable"] th, 
+    [data-testid="stTable"] th * {
         background-color: #2b3674 !important;
         color: #ffffff !important;
         font-weight: bold !important;
-        border-bottom: 2px solid #171721 !important;
     }
 </style>
 """, unsafe_allow_html=True)
