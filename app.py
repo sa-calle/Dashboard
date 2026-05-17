@@ -203,8 +203,8 @@ if tipo_pavimento == "Pavimento Flexible":
         st.write("### Tabla 4. Error estándar combinado (So) recomendado")
         df_error = pd.DataFrame({
             "Condición": ["Construcción nueva", "Sobrecapa (Rehabilitación)"],
-            "Flexible": ["0.40 a 0.50", "0.50"],
-            "Rígido": ["0.30 a 0.40", "0.40"]
+            "Flexible": ["0.45", "0.50"],
+            "Rígido": ["0.35", "0.40"]
         })
         st.table(df_error)
         
@@ -217,7 +217,7 @@ if tipo_pavimento == "Pavimento Flexible":
                 "Pavimento urbano principal", 
                 "Pavimento urbano secundario"
             ],
-            "Serviciabilidad (Pf)": ["2.5 a 3.0", "2.0 a 2.5", "", "1.5 a 2.0", "1.5 a 2.0"]
+            "Serviciabilidad (Pf)": ["2.5 a 3.0", "2.0 a 2.5", "2.0 a 2.5", "2.0 a 2.5", "1.5 a 2.0"]
         })
         st.table(df_serviciabilidad)
         
@@ -227,6 +227,17 @@ if tipo_pavimento == "Pavimento Flexible":
             "Standard Normal Deviate (Zr)": ["0.000", "-0.253", "-0.524", "-0.674", "-0.841", "-1.037", "-1.282", "-1.645", "-2.327", "-3.090", "-3.750"]
         })
         st.table(df_zr)
+
+        st.write("### Coeficiente de drenaje mi para pavimentos flexibles")
+        df_drenaje_mi = pd.DataFrame({
+            "Calidad del Drenaje": ["Excellent (Excelente)", "Good (Bueno)", "Fair (Regular)", "Poor (Pobre)", "Very Poor (Muy Malo)"],
+            "Agua removida en": ["2 horas", "1 día", "1 semana", "1 mes", "Nunca drena"],
+            "< 1%": ["1.40 – 1.35", "1.35 – 1.25", "1.25 – 1.15", "1.15 – 1.05", "1.05 – 0.95"],
+            "1 – 5%": ["1.35 – 1.30", "1.25 – 1.15", "1.15 – 1.05", "1.05 – 0.80", "0.95 – 0.75"],
+            "5 – 25%": ["1.30 – 1.20", "1.15 – 1.00", "1.00 – 0.80", "0.80 – 0.60", "0.75 – 0.40"],
+            "> 25%": ["1.20", "1.00", "0.80", "0.60", "0.40"]
+        })
+        st.table(df_drenaje_mi)
 
 
 # =========================================
