@@ -1,11 +1,11 @@
 import streamlit as st
 import numpy as np
 import pint
+import pandas as pd # Importación de pandas para las tablas
 
 # =========================================
 # IMPORTACIONES DE TUS MÓDULOS
 # =========================================
-# Asegúrate de que todas estas funciones existan en tu archivo Modulos.py
 from Modulos import (
     calcular_sn,
     espesores_minimos,
@@ -42,6 +42,8 @@ st.markdown("""
     [data-testid="stMetricValue"] { color: #2b3674 !important; font-size: 28px !important; font-weight: 700 !important; }
     [data-testid="stMetricLabel"] { color: #a3aed1 !important; font-size: 14px !important; font-weight: 500 !important; text-transform: uppercase; }
     hr { border-color: #e2e8f0 !important; margin-top: 2rem; margin-bottom: 2rem; }
+    /* Estilos para que las tablas ocupen todo el ancho y se vean bien */
+    div[data-testid="stTable"] { margin-bottom: 2rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -139,6 +141,68 @@ if tipo_pavimento == "Pavimento Flexible":
     col2.metric("Base Granular", f"{h2:.2f} cm")
     col3.metric("Subbase Granular", f"{h3:.2f} cm")
 
+    st.divider()
+    
+    # =========================================
+    # SECCIÓN DE TABLAS DE REFERENCIA (FLEXIBLE)
+    # =========================================
+    st.header("Tablas de Referencia AASHTO 1993")
+    
+    with st.expander("Ver Tablas Guía de Diseño"):
+        st.write("### Tabla 1. Periodo de análisis (años)")
+        df_periodo = pd.DataFrame({
+            "Condición de la vía": [
+                "Vía urbana de alto volumen",
+                "Vía rural de alto volumen",
+                "Vía pavimentada de bajo volumen",
+                "Vía no pavimentada de bajo volumen"
+            ],
+            "Periodo de análisis (Años)": ["30-50", "20-50", "15-25", "10-20"]
+        })
+        st.table(df_periodo)
+
+        st.write("### Tabla 2. Factor de distribución por carril (FDC)")
+        df_fdc = pd.DataFrame({
+            "Número de carriles": ["1", "2", "3", "4"],
+            "Porcentaje de ejes de 18k a diseño": ["100", "80-100", "60-80", "50-75"]
+        })
+        st.table(df_fdc)
+
+        st.write("### Tabla 3. Nivel de Confiabilidad R (%) recomendado")
+        df_confiabilidad = pd.DataFrame({
+            "Clasificación funcional": ["Autopista", "Arteria principal", "Colectora", "Local"],
+            "Urbano": ["85-99.9", "80-99", "80-95", "50-80"],
+            "Rural": ["80-99.9", "75-95", "75-95", "50-80"]
+        })
+        st.table(df_confiabilidad)
+
+        st.write("### Tabla 4. Error estándar combinado (So) recomendado")
+        df_error = pd.DataFrame({
+            "Condición": ["Construcción nueva", "Sobrecapa (Rehabilitación)"],
+            "Flexible": ["0.45", "0.50"],
+            "Rígido": ["0.35", "0.40"]
+        })
+        st.table(df_error)
+        
+        st.write("### Serviciabilidad Final (Pf) recomendada")
+        df_serviciabilidad = pd.DataFrame({
+            "Tipo de Vía": [
+                "Autopista", 
+                "Carretera", 
+                "Zonas industriales", 
+                "Pavimento urbano principal", 
+                "Pavimento urbano secundario"
+            ],
+            "Serviciabilidad (Pf)": ["2.5 a 3.0", "2.0 a 2.5", "2.0 a 2.5", "2.0 a 2.5", "1.5 a 2.0"]
+        })
+        st.table(df_serviciabilidad)
+        
+        st.write("### Desviación Estándar Normal (Zr)")
+        df_zr = pd.DataFrame({
+            "Reliability (%)": ["50", "60", "70", "75", "80", "85", "90", "95", "99", "99.9", "99.99"],
+            "Standard Normal Deviate (Zr)": ["0.000", "-0.253", "-0.524", "-0.674", "-0.841", "-1.037", "-1.282", "-1.645", "-2.327", "-3.090", "-3.750"]
+        })
+        st.table(df_zr)
 
 # =========================================
 # LÓGICA: PAVIMENTO RÍGIDO
