@@ -356,20 +356,41 @@ else:
         })
         st.table(df_pasadores)
 
-        st.write("### 9. Consideraciones para Barras de Anclaje")
+        st.write("### 9. Barras de Anclaje (Acero fy = 280 MPa)")
+        df_anclaje_280 = pd.DataFrame({
+            "Barra": ["3/8\"", "3/8\"", "3/8\"", "3/8\"", "3/8\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "5/8\"", "5/8\"", "5/8\"", "5/8\"", "5/8\""],
+            "L (cm)": [45, 45, 45, 45, 45, 60, 60, 60, 60, 60, 70, 70, 70, 70, 70],
+            "H (cm)": [15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25],
+            "S = 3.05 m": [80, 70, 60, 55, 45, 120, 120, 105, 95, 85, 120, 120, 120, 120, 120],
+            "S = 3.35 m": [75, 60, 55, 50, 45, 120, 110, 100, 85, 80, 120, 120, 120, 120, 120],
+            "S = 3.65 m": [65, 55, 50, 45, 40, 120, 100, 90, 80, 70, 120, 120, 120, 120, 120]
+        })
+        st.table(df_anclaje_280)
+        
+        st.write("### 9.1 Barras de Anclaje (Acero fy = 420 MPa)")
+        df_anclaje_420 = pd.DataFrame({
+            "Barra": ["3/8\"", "3/8\"", "3/8\"", "3/8\"", "3/8\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "5/8\"", "5/8\"", "5/8\"", "5/8\"", "5/8\""],
+            "L (cm)": [65, 65, 65, 65, 65, 85, 85, 85, 85, 85, 100, 100, 100, 100, 100],
+            "H (cm)": [15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25],
+            "S = 3.05 m": [120, 105, 90, 80, 70, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120],
+            "S = 3.35 m": [110, 95, 80, 75, 65, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120],
+            "S = 3.65 m": [100, 85, 75, 65, 60, 120, 120, 120, 120, 115, 120, 120, 120, 120, 120]
+        })
+        st.table(df_anclaje_420)
+
         st.info("""
-        **Nota de diseño:** La tabla para el cálculo de barras de anclaje depende de múltiples variables constructivas:
-        * **Espesor de la losa (H)**
-        * **Longitud de la barra (L)**
-        * **Separación (S)**
-        * **Diámetros estándar:** 3/8", 1/2", 5/8"
-        * **Límite de fluencia del acero:** fy = 280 MPa o fy = 420 MPa
-        * **Anchos de carril típicos:** 3.05 m, 3.35 m, 3.65 m
+        **Convenciones de la tabla:**
+        * **H** = espesor de la losa (cm)
+        * **L** = longitud de barra (cm)
+        * **S** = separación entre barras/juntas (m)
+        * Los valores numéricos bajo S indican la separación (cm) recomendada entre las barras de anclaje.
+        
+        **Nota:** Si se usa barra lisa en vez de corrugada: $L_{nueva} = 1.5L$
         """)
+
 
         st.write("### 10. Criterios de longitud máxima de losa")
         st.info("""
-        **Nota de diseño:** La tabla para el cálculo de barras de anclaje depende de múltiples variables constructivas:
         * **Lmax = 1.25b**
         * **Lmax = 25h**
         * **Lmax = 6 m**
