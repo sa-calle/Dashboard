@@ -1,11 +1,12 @@
 import streamlit as st
 import numpy as np
 import pint
-import pandas as pd # Importación de pandas para las tablas
+import pandas as pd 
 
 # =========================================
 # IMPORTACIONES DE TUS MÓDULOS
 # =========================================
+# Asegúrate de que todas estas funciones existan en tu archivo Modulos.py
 from Modulos import (
     calcular_sn,
     espesores_minimos,
@@ -20,7 +21,7 @@ from Modulos import (
 ureg = pint.UnitRegistry()
 
 # =========================================
-# CONFIGURACIÓN VISUAL
+# CONFIGURACIÓN VISUAL Y ESTILOS (CSS)
 # =========================================
 st.set_page_config(
     page_title="Dashboard de Diseño de Pavimentos - AASHTO",
@@ -31,9 +32,15 @@ st.markdown("""
 <style>
     .stApp { background-color: #f4f7fe; }
     .block-container { padding-top: 2rem; padding-bottom: 2rem; }
+    
+    /* Menú lateral */
     [data-testid="stSidebar"] { background-color: #171721; }
     [data-testid="stSidebar"] * { color: #e2e8f0 !important; }
-    h1, h2, h3 { color: #2b3674 !important; font-weight: 700 !important; }
+    
+    /* Títulos y texto general */
+    h1, h2, h3, p { color: #2b3674 !important; font-weight: 700 !important; }
+    
+    /* Tarjetas de métricas */
     .stMetric {
         background-color: #ffffff; padding: 20px 25px;
         border-radius: 20px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
@@ -42,8 +49,22 @@ st.markdown("""
     [data-testid="stMetricValue"] { color: #2b3674 !important; font-size: 28px !important; font-weight: 700 !important; }
     [data-testid="stMetricLabel"] { color: #a3aed1 !important; font-size: 14px !important; font-weight: 500 !important; text-transform: uppercase; }
     hr { border-color: #e2e8f0 !important; margin-top: 2rem; margin-bottom: 2rem; }
-    /* Estilos para que las tablas ocupen todo el ancho y se vean bien */
+    
+    /* Estilos corregidos para las tablas */
     div[data-testid="stTable"] { margin-bottom: 2rem; }
+    
+    table tbody tr td {
+        background-color: #ffffff !important;
+        color: #171721 !important; 
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+    
+    table thead tr th {
+        background-color: #2b3674 !important;
+        color: #ffffff !important;
+        font-weight: bold !important;
+        border-bottom: 2px solid #171721 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -148,7 +169,7 @@ if tipo_pavimento == "Pavimento Flexible":
     # =========================================
     st.header("Tablas de Referencia AASHTO 1993")
     
-    with st.expander("Ver Tablas Guía de Diseño"):
+    with st.expander("Ver Tablas Guía de Diseño (Desplegar)"):
         st.write("### Tabla 1. Periodo de análisis (años)")
         df_periodo = pd.DataFrame({
             "Condición de la vía": [
@@ -203,6 +224,7 @@ if tipo_pavimento == "Pavimento Flexible":
             "Standard Normal Deviate (Zr)": ["0.000", "-0.253", "-0.524", "-0.674", "-0.841", "-1.037", "-1.282", "-1.645", "-2.327", "-3.090", "-3.750"]
         })
         st.table(df_zr)
+
 
 # =========================================
 # LÓGICA: PAVIMENTO RÍGIDO
