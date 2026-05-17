@@ -37,7 +37,7 @@ st.markdown("""
     [data-testid="stSidebar"] * { color: #e2e8f0 !important; }
     
     /* Títulos y texto general */
-    h1, h2, h3, p { color: #2b3674 !important; font-weight: 700 !important; }
+    h1, h2, h3, p, li { color: #2b3674 !important; font-weight: 700 !important; }
     
     /* Tarjetas de métricas */
     .stMetric {
@@ -287,41 +287,101 @@ else:
     st.divider()
 
     # =========================================
-    # SECCIÓN DE TABLAS DE REFERENCIA (RÍGIDO)
+    # SECCIÓN DE TABLAS DE REFERENCIA (NUEVAS RÍGIDO)
     # =========================================
     st.header("Tablas de Referencia AASHTO 1993 - Rígido")
     
     with st.expander("Ver Tablas Guía de Diseño Rígido (Desplegar)"):
-        st.write("### Tabla 12. Valores del coeficiente de transferencia de carga (J)")
-        df_transferencia = pd.DataFrame({
-            "Tipo de Pavimento": ["Concreto simple y reforzado con juntas", "Concreto simple y reforzado con juntas", "Concreto con refuerzo continuo", "Concreto con refuerzo continuo"],
-            "Tipo de Berma": ["Asfálticas", "Concreto de cemento portland", "Asfálticas", "Concreto de cemento portland"],
-            "Con aparatos de transferencia (Sí)": ["3.2", "2.5 - 3.1", "2.9 - 3.2", "2.5 - 3.1"],
-            "Sin aparatos de transferencia (No)": ["3.8 - 4.4", "3.6 - 4.2", "-", "-"]
+        
+        st.write("### 1. Factor de distribución por carril (FDC)")
+        df_fdc_rigido = pd.DataFrame({
+            "Número de carriles": ["1", "2", "3", "4"],
+            "% de ejes equivalentes en el carril de diseño": ["100", "80 – 100", "60 – 80", "50 – 75"]
         })
-        st.table(df_transferencia)
+        st.table(df_fdc_rigido)
 
-        st.write("### Coeficiente de drenaje Cd para pavimentos rígidos")
-        df_drenaje_cd = pd.DataFrame({
-            "Calidad del Drenaje": ["Excelente", "Bueno", "Regular", "Pobre", "Muy malo"],
-            "Agua removida en": ["2 horas", "1 día", "1 semana", "1 mes", "Nunca drena"],
-            "< 1%": ["1.25 – 1.20", "1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00"],
-            "1 – 5%": ["1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90", "0.90"],
-            "5 – 25%": ["1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90", "0.90 – 0.80", "0.80"],
+        st.write("### 2. Resistencia del concreto – Módulo de rotura (MR)")
+        df_mr = pd.DataFrame({
+            "Número de camiones por día": ["> 300", "150 – 300", "25 – 150", "< 25"],
+            "MR a flexión (MPa)": ["4.5", "4.2", "4.0", "3.8"]
+        })
+        st.table(df_mr)
+
+        st.write("### 3. Coeficiente de drenaje (Cd)")
+        df_cd = pd.DataFrame({
+            "Características del drenaje": ["Excelente", "Bueno", "Regular", "Pobre", "Muy malo"],
+            "< 1%": ["1.25 – 1.20", "1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90"],
+            "1 – 5%": ["1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90", "0.90 – 0.80"],
+            "5 – 25%": ["1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90", "0.90 – 0.80", "0.80 – 0.70"],
             "> 25%": ["1.10", "1.00", "0.90", "0.80", "0.70"]
         })
-        st.table(df_drenaje_cd)
+        st.table(df_cd)
 
-        st.write("### Factor de Pérdida de Soporte (LS) según tipo de base")
-        df_ls = pd.DataFrame({
-            "Tipo de Material de Base": [
-                "Base granular estabilizada con cemento (E = 3,000,000 a 4,000,000 psi)",
-                "Base estabilizada con asfalto (E = 350,000 a 1,000,000 psi)",
-                "Base estabilizada con cemento o ligante (E = 40,000 a 300,000 psi)",
-                "Base granular de agregados triturados (E = 15,000 a 45,000 psi)",
-                "Suelos naturales limpios o arenas estabilizadas (E = 7,000 a 40,000 psi)",
-                "Subrasantes finas o sin base (E = 3,000 a 40,000 psi)"
-            ],
-            "Pérdida de Soporte (LS)": ["0.0 a 1.0", "0.0 a 1.0", "1.0 a 3.0", "1.0 a 3.0", "2.0 a 3.0", "2.0 a 3.0"]
+        st.write("### 4. Valores típicos de serviciabilidad final (Pf)")
+        df_pf = pd.DataFrame({
+            "Tipo de vía": ["Autopista", "Colectoras", "Calles comerciales", "Calles residenciales"],
+            "Pf": ["3.0", "2.5", "2.25", "2.0"]
         })
-        st.table(df_ls)
+        st.table(df_pf)
+
+        st.write("### 5. Nivel de confiabilidad recomendado")
+        df_conf = pd.DataFrame({
+            "Clasificación funcional": ["Autopista", "Arteria principal", "Colectora", "Local"],
+            "Urbana": ["85 – 99.9", "80 – 99.9", "80 – 95", "50 – 80"],
+            "Rural": ["80 – 99.9", "75 – 95", "75 – 95", "50 – 80"]
+        })
+        st.table(df_conf)
+
+        st.write("### 6. Error estándar combinado (So)")
+        df_so = pd.DataFrame({
+            "Proyecto": ["Construcción nueva", "Sobre capas"],
+            "Flexible": ["0.40 – 0.50", "0.50"],
+            "Rígido": ["0.30 – 0.40", "0.40"]
+        })
+        st.table(df_so)
+
+        st.write("### 7. Periodo de diseño estructural")
+        df_periodo_rigido = pd.DataFrame({
+            "Condición de la vía": ["Urbana alto volumen", "Rural alto volumen", "Pavimentada bajo volumen", "Bajo volumen agregado"],
+            "Periodo (años)": ["30 – 50", "20 – 50", "15 – 25", "10 – 20"]
+        })
+        st.table(df_periodo_rigido)
+
+        st.write("### 8. Tabla de pasadores")
+        df_pasadores = pd.DataFrame({
+            "Espesor de losa (cm)": ["14 – 15", "16 – 18", "19 – 20", "21 – 23", "24 – 25", "26 – 28", "29 – 30"],
+            "Diámetro del pasador (pulg)": ["3/4", "7/8", "1", "1 1/8", "1 1/4", "1 3/8", "1 1/2"],
+            "Longitud pasador (cm)": ["35", "35", "35", "40", "45", "45", "50"],
+            "Separación centros (cm)": ["30", "30", "30", "30", "30", "30", "30"]
+        })
+        st.table(df_pasadores)
+
+        st.write("### 9. Consideraciones para Barras de Anclaje")
+        st.info("""
+        **Nota de diseño:** La tabla para el cálculo de barras de anclaje depende de múltiples variables constructivas:
+        * **Espesor de la losa (H)**
+        * **Longitud de la barra (L)**
+        * **Separación (S)**
+        * **Diámetros estándar:** 3/8", 1/2", 5/8"
+        * **Límite de fluencia del acero:** fy = 280 MPa o fy = 420 MPa
+        * **Anchos de carril típicos:** 3.05 m, 3.35 m, 3.65 m
+        """)
+
+        st.write("### 10. Criterios de longitud máxima de losa")
+        st.latex(r"L_{max} = 1.25 \times b")
+        st.latex(r"L_{max} = 25 \times h")
+        st.latex(r"L_{max} = 6 \text{ m}")
+
+        st.write("### 11. Variables Ecuación de diseño AASHTO Rígido")
+        st.markdown("""
+        * **$D$**: Espesor de la losa de concreto (pulgadas)
+        * **$W_{18}$**: Número estimado de ejes equivalentes de 18 kips (ESALs)
+        * **$Z_R$**: Desviación estándar normal (Confiabilidad)
+        * **$S_o$**: Error estándar combinado
+        * **$\Delta PSI$**: Pérdida de serviciabilidad ($P_o - P_f$)
+        * **$J$**: Coeficiente de transferencia de carga
+        * **$C_d$**: Coeficiente de drenaje
+        * **$E_c$**: Módulo de elasticidad del concreto (psi)
+        * **$S'_c$ (o MR)**: Módulo de rotura del concreto (psi)
+        * **$k$**: Módulo de reacción de la subrasante (pci)
+        """)
