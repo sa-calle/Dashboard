@@ -293,21 +293,46 @@ else:
     
     with st.expander("Ver Tablas Guía de Diseño Rígido (Desplegar)"):
         
-        st.write("### 1. Factor de distribución por carril (FDC)")
+        # ==========================================================
+        # ESTA TABLA Y SUS FÓRMULAS AHORA SON LAS PRIMERAS (#1)
+        # ==========================================================
+        st.write("### 1. Estimación del Módulo de Reacción (K) mediante CBR y Efecto de la Subbase")
+        st.markdown("Fórmulas para estimar empíricamente el valor del módulo de reacción de la subrasante **$K$ (en MPa/m)** basándose en el ensayo CBR del suelo:")
+        st.latex(r"K = 2.55 + 52.5 \times \log_{10}(CBR) \quad \text{para } CBR \le 10")
+        st.latex(r"K = 46 + 9.08 \times (\log_{10}(CBR))^{4.34} \quad \text{para } CBR > 10")
+        
+        st.markdown("**Efecto del espesor de la subbase granular sobre el incremento de los valores de K:**")
+        df_k_subbase = pd.DataFrame({
+            "K subrasante (MPa/m)": ["20", "40", "60", "80"],
+            "K subrasante (pci)": ["73", "147", "220", "295"],
+            "100 mm (MPa/m)": ["23", "45", "64", "87"],
+            "100 mm (pci)": ["85", "165", "235", "320"],
+            "150 mm (MPa/m)": ["26", "49", "66", "90"],
+            "150 mm (pci)": ["96", "180", "245", "330"],
+            "225 mm (MPa/m)": ["32", "57", "76", "100"],
+            "225 mm (pci)": ["117", "210", "280", "370"],
+            "300 mm (MPa/m)": ["38", "66", "90", "117"],
+            "300 mm (pci)": ["140", "245", "330", "430"]
+        })
+        st.table(df_k_subbase)
+        st.info("Nota: Lb/pulg³ equivale a **pci** (pounds per cubic inch). Esta tabla muestra cómo el módulo de reacción combinado (efectivo) del sistema de soporte se eleva al colocar capas granulares de subbase (100 a 300 mm) sobre la subrasante natural.")
+
+        # CONTINUACIÓN DE LAS DEMÁS TABLAS RE-NUMERADAS
+        st.write("### 2. Factor de distribución por carril (FDC)")
         df_fdc_rigido = pd.DataFrame({
             "Número de carriles": ["1", "2", "3", "4"],
             "% de ejes equivalentes en el carril de diseño": ["100", "80 – 100", "60 – 80", "50 – 75"]
         })
         st.table(df_fdc_rigido)
 
-        st.write("### 2. Resistencia del concreto – Módulo de rotura (MR)")
+        st.write("### 3. Resistencia del concreto – Módulo de rotura (MR)")
         df_mr = pd.DataFrame({
             "Número de camiones por día": ["> 300", "150 – 300", "25 – 150", "< 25"],
             "MR a flexión (MPa)": ["4.5", "4.2", "4.0", "3.8"]
         })
         st.table(df_mr)
 
-        st.write("### 3. Coeficiente de drenaje (Cd)")
+        st.write("### 4. Coeficiente de drenaje (Cd)")
         df_cd = pd.DataFrame({
             "Características del drenaje": ["Excelente", "Bueno", "Regular", "Pobre", "Muy malo"],
             "< 1%": ["1.25 – 1.20", "1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90"],
@@ -317,14 +342,14 @@ else:
         })
         st.table(df_cd)
 
-        st.write("### 4. Valores típicos de serviciabilidad final (Pf)")
+        st.write("### 5. Valores típicos de serviciabilidad final (Pf)")
         df_pf = pd.DataFrame({
             "Tipo de vía": ["Autopista", "Colectoras", "Calles comerciales", "Calles residenciales"],
             "Pf": ["3.0", "2.5", "2.25", "2.0"]
         })
         st.table(df_pf)
 
-        st.write("### 5. Nivel de confiabilidad recomendado")
+        st.write("### 6. Nivel de confiabilidad recomendado")
         df_conf = pd.DataFrame({
             "Clasificación funcional": ["Autopista", "Arteria principal", "Colectora", "Local"],
             "Urbana": ["85 – 99.9", "80 – 99.9", "80 – 95", "50 – 80"],
@@ -332,7 +357,7 @@ else:
         })
         st.table(df_conf)
 
-        st.write("### 6. Error estándar combinado (So)")
+        st.write("### 7. Error estándar combinado (So)")
         df_so = pd.DataFrame({
             "Proyecto": ["Construcción nueva", "Sobre capas"],
             "Flexible": ["0.40 – 0.50", "0.50"],
@@ -340,14 +365,14 @@ else:
         })
         st.table(df_so)
 
-        st.write("### 7. Periodo de diseño estructural")
+        st.write("### 8. Periodo de diseño estructural")
         df_periodo_rigido = pd.DataFrame({
             "Condición de la vía": ["Urbana alto volumen", "Rural alto volumen", "Pavimentada bajo volumen", "Bajo volumen agregado"],
             "Periodo (años)": ["30 – 50", "20 – 50", "15 – 25", "10 – 20"]
         })
         st.table(df_periodo_rigido)
 
-        st.write("### 8. Tabla de pasadores")
+        st.write("### 9. Tabla de pasadores")
         df_pasadores = pd.DataFrame({
             "Espesor de losa (cm)": ["14 – 15", "16 – 18", "19 – 20", "21 – 23", "24 – 25", "26 – 28", "29 – 30"],
             "Diámetro del pasador (pulg)": ["3/4", "7/8", "1", "1 1/8", "1 1/4", "1 3/8", "1 1/2"],
@@ -356,62 +381,26 @@ else:
         })
         st.table(df_pasadores)
 
-        st.write("### 9. Barras de Anclaje (Acero fy = 280 MPa)")
+        st.write("### 10. Barras de Anclaje (Acero fy = 280 MPa)")
         df_anclaje_280 = pd.DataFrame({
-            "Barra": ["3/8\"", "3/8\"", "3/8\"", "3/8\"", "3/8\"",
-                    "1/2\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"",
-                    "5/8\"", "5/8\"", "5/8\"", "5/8\"", "5/8\""],
-
-            "L (cm)": [45, 45, 45, 45, 45,
-                    60, 60, 60, 60, 60,
-                    70, 70, 70, 70, 70],
-
-            "H (cm)": [15, 17.5, 20, 22.5, 25,
-                    15, 17.5, 20, 22.5, 25,
-                    15, 17.5, 20, 22.5, 25],
-
-            "S = 3.05 m": [80, 70, 60, 55, 45,
-                        120, 120, 105, 95, 85,
-                        120, 120, 120, 120, 120],
-
-            "S = 3.35 m": [75, 60, 55, 50, 45,
-                        120, 110, 100, 85, 80,
-                        120, 120, 120, 120, 120],
-
-            "S = 3.65 m": [65, 55, 50, 45, 40,
-                        120, 100, 90, 80, 70,
-                        120, 120, 120, 120, 120]
+            "Barra": ["3/8\"", "3/8\"", "3/8\"", "3/8\"", "3/8\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "5/8\"", "5/8\"", "5/8\"", "5/8\"", "5/8\""],
+            "L (cm)": [45, 45, 45, 45, 45, 60, 60, 60, 60, 60, 70, 70, 70, 70, 70],
+            "H (cm)": [15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25],
+            "S = 3.05 m": [80, 70, 60, 55, 45, 120, 120, 105, 95, 85, 120, 120, 120, 120, 120],
+            "S = 3.35 m": [75, 60, 55, 50, 45, 120, 110, 100, 85, 80, 120, 120, 120, 120, 120],
+            "S = 3.65 m": [65, 55, 50, 45, 40, 120, 100, 90, 80, 70, 120, 120, 120, 120, 120]
         })
-
         st.table(df_anclaje_280)
-
-        st.write("### 9.1 Barras de Anclaje (Acero fy = 420 MPa)")
+        
+        st.write("### 10.1 Barras de Anclaje (Acero fy = 420 MPa)")
         df_anclaje_420 = pd.DataFrame({
-            "Barra": ["3/8\"", "3/8\"", "3/8\"", "3/8\"", "3/8\"",
-                    "1/2\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"",
-                    "5/8\"", "5/8\"", "5/8\"", "5/8\"", "5/8\""],
-
-            "L (cm)": [65, 65, 65, 65, 65,
-                    85, 85, 85, 85, 85,
-                    100, 100, 100, 100, 100],
-
-            "H (cm)": [15, 17.5, 20, 22.5, 25,
-                    15, 17.5, 20, 22.5, 25,
-                    15, 17.5, 20, 22.5, 25],
-
-            "S = 3.05 m": [120, 105, 90, 80, 70,
-                        120, 120, 120, 120, 120,
-                        120, 120, 120, 120, 120],
-
-            "S = 3.35 m": [110, 95, 80, 75, 65,
-                        120, 120, 120, 120, 115,
-                        120, 120, 120, 120, 120],
-
-            "S = 3.65 m": [100, 85, 75, 65, 60,
-                        120, 120, 120, 120, 110,
-                        120, 120, 120, 120, 120]
+            "Barra": ["3/8\"", "3/8\"", "3/8\"", "3/8\"", "3/8\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "1/2\"", "5/8\"", "5/8\"", "5/8\"", "5/8\"", "5/8\""],
+            "L (cm)": [65, 65, 65, 65, 65, 85, 85, 85, 85, 85, 100, 100, 100, 100, 100],
+            "H (cm)": [15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25, 15, 17.5, 20, 22.5, 25],
+            "S = 3.05 m": [120, 105, 90, 80, 70, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120],
+            "S = 3.35 m": [110, 95, 80, 75, 65, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120],
+            "S = 3.65 m": [100, 85, 75, 65, 60, 120, 120, 120, 120, 115, 120, 120, 120, 120, 120]
         })
-
         st.table(df_anclaje_420)
 
         st.info("""
@@ -424,11 +413,9 @@ else:
         **Nota:** Si se usa barra lisa en vez de corrugada: $L_{nueva} = 1.5L$
         """)
 
-
         st.write("### 10. Criterios de longitud máxima de losa")
         st.info("""
         * **Lmax = 1.25b**
         * **Lmax = 25h**
         * **Lmax = 6 m**
         """)
-
