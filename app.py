@@ -203,8 +203,8 @@ if tipo_pavimento == "Pavimento Flexible":
         st.write("### Tabla 4. Error estándar combinado (So) recomendado")
         df_error = pd.DataFrame({
             "Condición": ["Construcción nueva", "Sobrecapa (Rehabilitación)"],
-            "Flexible": ["0.45", "0.50"],
-            "Rígido": ["0.35", "0.40"]
+            "Flexible": ["0.40 a 0.50", "0.50"],
+            "Rígido": ["0.30 a 0.40", "0.40"]
         })
         st.table(df_error)
         
@@ -217,7 +217,7 @@ if tipo_pavimento == "Pavimento Flexible":
                 "Pavimento urbano principal", 
                 "Pavimento urbano secundario"
             ],
-            "Serviciabilidad (Pf)": ["2.5 a 3.0", "2.0 a 2.5", "2.0 a 2.5", "2.0 a 2.5", "1.5 a 2.0"]
+            "Serviciabilidad (Pf)": ["2.5 a 3.0", "2.0 a 2.5", "", "1.5 a 2.0", "1.5 a 2.0"]
         })
         st.table(df_serviciabilidad)
         
