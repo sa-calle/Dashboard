@@ -170,17 +170,12 @@ if tipo_pavimento == "Pavimento Flexible":
     # =========================================
     # SECCIÓN DE TABLAS DE REFERENCIA (FLEXIBLE)
     # =========================================
-    st.header("Tablas de Referencia AASHTO 1993")
+    st.header("Tablas de Referencia AASHTO 1993 - Flexible")
     
     with st.expander("Ver Tablas Guía de Diseño (Desplegar)"):
         st.write("### Tabla 1. Periodo de análisis (años)")
         df_periodo = pd.DataFrame({
-            "Condición de la vía": [
-                "Vía urbana de alto volumen",
-                "Vía rural de alto volumen",
-                "Vía pavimentada de bajo volumen",
-                "Vía no pavimentada de bajo volumen"
-            ],
+            "Condición de la vía": ["Vía urbana de alto volumen", "Vía rural de alto volumen", "Vía pavimentada de bajo volumen", "Vía no pavimentada de bajo volumen"],
             "Periodo de análisis (Años)": ["30-50", "20-50", "15-25", "10-20"]
         })
         st.table(df_periodo)
@@ -210,13 +205,7 @@ if tipo_pavimento == "Pavimento Flexible":
         
         st.write("### Serviciabilidad Final (Pf) recomendada")
         df_serviciabilidad = pd.DataFrame({
-            "Tipo de Vía": [
-                "Autopista", 
-                "Carretera", 
-                "Zonas industriales", 
-                "Pavimento urbano principal", 
-                "Pavimento urbano secundario"
-            ],
+            "Tipo de Vía": ["Autopista", "Carretera", "Zonas industriales", "Pavimento urbano principal", "Pavimento urbano secundario"],
             "Serviciabilidad (Pf)": ["2.5 a 3.0", "2.0 a 2.5", "2.0 a 2.5", "2.0 a 2.5", "1.5 a 2.0"]
         })
         st.table(df_serviciabilidad)
@@ -294,3 +283,45 @@ else:
     col1, col2 = st.columns(2)
     col1.metric("Espesor Requerido (D)", f"{D:.2f} pulgadas")
     col2.metric("Espesor Constructivo (D)", f"{D_cm:.2f} cm")
+
+    st.divider()
+
+    # =========================================
+    # SECCIÓN DE TABLAS DE REFERENCIA (RÍGIDO)
+    # =========================================
+    st.header("Tablas de Referencia AASHTO 1993 - Rígido")
+    
+    with st.expander("Ver Tablas Guía de Diseño Rígido (Desplegar)"):
+        st.write("### Tabla 12. Valores del coeficiente de transferencia de carga (J)")
+        df_transferencia = pd.DataFrame({
+            "Tipo de Pavimento": ["Concreto simple y reforzado con juntas", "Concreto simple y reforzado con juntas", "Concreto con refuerzo continuo", "Concreto con refuerzo continuo"],
+            "Tipo de Berma": ["Asfálticas", "Concreto de cemento portland", "Asfálticas", "Concreto de cemento portland"],
+            "Con aparatos de transferencia (Sí)": ["3.2", "2.5 - 3.1", "2.9 - 3.2", "2.5 - 3.1"],
+            "Sin aparatos de transferencia (No)": ["3.8 - 4.4", "3.6 - 4.2", "-", "-"]
+        })
+        st.table(df_transferencia)
+
+        st.write("### Coeficiente de drenaje Cd para pavimentos rígidos")
+        df_drenaje_cd = pd.DataFrame({
+            "Calidad del Drenaje": ["Excelente", "Bueno", "Regular", "Pobre", "Muy malo"],
+            "Agua removida en": ["2 horas", "1 día", "1 semana", "1 mes", "Nunca drena"],
+            "< 1%": ["1.25 – 1.20", "1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00"],
+            "1 – 5%": ["1.20 – 1.15", "1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90", "0.90"],
+            "5 – 25%": ["1.15 – 1.10", "1.10 – 1.00", "1.00 – 0.90", "0.90 – 0.80", "0.80"],
+            "> 25%": ["1.10", "1.00", "0.90", "0.80", "0.70"]
+        })
+        st.table(df_drenaje_cd)
+
+        st.write("### Factor de Pérdida de Soporte (LS) según tipo de base")
+        df_ls = pd.DataFrame({
+            "Tipo de Material de Base": [
+                "Base granular estabilizada con cemento (E = 3,000,000 a 4,000,000 psi)",
+                "Base estabilizada con asfalto (E = 350,000 a 1,000,000 psi)",
+                "Base estabilizada con cemento o ligante (E = 40,000 a 300,000 psi)",
+                "Base granular de agregados triturados (E = 15,000 a 45,000 psi)",
+                "Suelos naturales limpios o arenas estabilizadas (E = 7,000 a 40,000 psi)",
+                "Subrasantes finas o sin base (E = 3,000 a 40,000 psi)"
+            ],
+            "Pérdida de Soporte (LS)": ["0.0 a 1.0", "0.0 a 1.0", "1.0 a 3.0", "1.0 a 3.0", "2.0 a 3.0", "2.0 a 3.0"]
+        })
+        st.table(df_ls)
