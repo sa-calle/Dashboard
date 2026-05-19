@@ -155,6 +155,10 @@ if tipo_pavimento == "Pavimento Flexible":
     col3.metric("Coeficiente usado", f"{m2:.3f}")
     
     st.divider()
+    
+    SN3 = calcular_sn(W_18, confiabilidad, error_estandar, dpsi, Mr_subrasante)
+    SN2 = calcular_sn(W_18, confiabilidad, error_estandar, dpsi, Mr_subbase)
+    SN1 = calcular_sn(W_18, confiabilidad, error_estandar, dpsi, Mr_base)
 
     st.subheader("Resultados Estructurales (SN)")
     col1, col2, col3 = st.columns(3)
