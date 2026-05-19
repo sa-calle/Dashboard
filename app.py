@@ -168,9 +168,9 @@ if tipo_pavimento == "Pavimento Flexible":
 
     st.subheader("Resultados coeficientes estructurales (a)")
     col1, col2, col3 = st.columns(3)
-    col1.metric("a1", f"{SN3:.2f}")
-    col2.metric("a2", f"{SN2:.2f}")
-    col3.metric("a3", f"{SN1:.2f}")
+    col1.metric("a1", f"{a1:.2f}")
+    col2.metric("a2", f"{a2:.2f}")
+    col3.metric("a3", f"{a3:.2f}")
 
 
     st.subheader("Diseño Final de Espesores (Flexible)")
