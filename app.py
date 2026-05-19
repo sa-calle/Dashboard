@@ -328,6 +328,14 @@ else:
         st.table(df_k_subbase)
         st.info("Nota: Lb/pulg³ equivale a **pci** (pounds per cubic inch). Esta tabla muestra cómo el módulo de reacción combinado (efectivo) del sistema de soporte se eleva al colocar capas granulares de subbase (100 a 300 mm) sobre la subrasante natural.")
 
+        st.write("### Desviación Estándar Normal (Zr)")
+        df_zr = pd.DataFrame({
+            "Reliability (%)": ["50", "60", "70", "75", "80", "85", "90", "95", "99", "99.9", "99.99"],
+            "Standard Normal Deviate (Zr)": ["0.000", "-0.253", "-0.524", "-0.674", "-0.841", "-1.037", "-1.282", "-1.645", "-2.327", "-3.090", "-3.750"]
+        })
+        st.table(df_zr)
+
+
         st.write("### 2. Factor de distribución por carril (FDC)")
         df_fdc_rigido = pd.DataFrame({
             "Número de carriles": ["1", "2", "3", "4"],
