@@ -262,7 +262,7 @@ else:
     J = st.sidebar.number_input("Coef. Transf. Carga (J)", value=2.7)
 
     st.sidebar.subheader("Subrasante y Drenaje")
-    Modulo_de_reccion_combinado = st.sidebar.number_input("Módulo Reacción k (pci)", value=147)
+    Modulo_de_reccion_combinado = st.sidebar.number_input("Módulo Reacción k (pci)", value=180)
     Calidad_drenaje = st.sidebar.selectbox("Calidad de drenaje ", ["Excelente", "Bueno", "Regular", "Pobre", "Muy malo"], index=2)
     Dias_que_lleve_al_ano = st.sidebar.number_input("Días de lluvia al año", value=200)
     cd = st.sidebar.number_input("Coeficiente de drenaje (Cd) a usar", value=0.9)
@@ -274,7 +274,7 @@ else:
     Pf = obtener_serviciabilidad_final_D(Tipo_de_via)
     delta_psi = Po - Pf
     Porcentaje_saturacion = (Dias_que_lleve_al_ano / 365) * 100
-    rango_D, categoria_D = coeficiente_drenaje_rango_D(Calidad_drenaje, Porcentaje_saturacion)
+    rango_D, categoria_D = coeficiente_drenaje_rango_D(Calidad_drenaje , Porcentaje_saturacion)
 
     # Cálculo final
     D = Calcular_D(
@@ -374,8 +374,21 @@ else:
             "Rígido": ["0.30 – 0.40", "0.40"]
         })
         st.table(df_so)
+        
+        st.write("### 8. Coeficientes de transferencia de carga (J)")
+        
+        st.markdown("""
+        * **Definición:** El coeficiente **J** es un parámetro adimensional.
+        * **Función:** Tiene en cuenta la capacidad que posee la estructura de pavimento rígido para transferir o distribuir cargas en la zona con mayor riesgo de falla (las juntas).
+        
+        **Rangos típicos:**
+        * **J entre 2.7 y 3.2 (Condición confinada):** Está asociado a pavimentos con pasadores y con estructuras de confinamiento como bermas, bordillos y cunetas. Es la condición más común.
+        * **J entre 4.2 y 4.4 (Condición no confinada):** En la práctica, esta situación casi nunca ocurre.
+        """)
+        
+        st.info("💡 **Regla de diseño:** Entre mayor sea el valor asignado al coeficiente J, **mayor será el espesor** calculado para la losa de concreto.")
 
-        st.write("### 8. Periodo de diseño estructural")
+        st.write("###  Periodo de diseño estructural")
         df_periodo_rigido = pd.DataFrame({
             "Condición de la vía": ["Urbana alto volumen", "Rural alto volumen", "Pavimentada bajo volumen", "Bajo volumen agregado"],
             "Periodo (años)": ["30 – 50", "20 – 50", "15 – 25", "10 – 20"]
