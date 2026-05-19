@@ -166,6 +166,13 @@ if tipo_pavimento == "Pavimento Flexible":
     col2.metric("SN Subbase", f"{SN2:.2f}")
     col3.metric("SN Base", f"{SN1:.2f}")
 
+    st.subheader("Resultados coeficientes estructurales (a)")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("a1", f"{SN3:.2f}")
+    col2.metric("a2", f"{SN2:.2f}")
+    col3.metric("a3", f"{SN1:.2f}")
+
+
     st.subheader("Diseño Final de Espesores (Flexible)")
     col1, col2, col3 = st.columns(3)
     col1.metric("Carpeta Asfáltica", f"{h1:.2f} cm")
