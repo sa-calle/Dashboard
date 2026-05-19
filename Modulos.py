@@ -26,14 +26,14 @@ def calcular_trafico_maximo(sn, zr, s0, delta_psi, mr):
 
 def calcular_sn(w18, zr, s0, delta_psi, mr):
     def ecuacion(sn):
-        
         termino_base = zr * s0 + 9.36 * np.log10(sn + 1) - 0.20
         termino_psi = np.log10(delta_psi / (4.2 - 1.5)) / (0.4 + (1094 / (sn + 1)**5.19))
         termino_mr = 2.32 * np.log10(mr) - 8.07
 
+        # f(SN) = RHS - LHS = 0
         return (termino_base + termino_psi + termino_mr) - np.log10(w18)
 
-    sn_inicial = 3  # Valor inicial pequeño
+    sn_inicial = 3  # Valor inicial estimado
     resultado = fsolve(ecuacion, sn_inicial)
     
     return resultado[0]
