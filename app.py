@@ -92,7 +92,7 @@ st.sidebar.divider()
 # =========================================
 if tipo_pavimento == "Pavimento Flexible":
     st.sidebar.subheader("Tránsito y Confiabilidad")
-    W_18 = st.sidebar.number_input("W18 (ESAL)", value=1.8e6, format="%.2e")
+    W_18 = st.sidebar.number_input("W18", value=1.8e6, format="%.2e")
     confiabilidad = st.sidebar.number_input("Confiabilidad (Zr)", value=-1.282)
     error_estandar = st.sidebar.number_input("Error Estándar (S0)", value=0.45)
     
