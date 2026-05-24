@@ -376,11 +376,11 @@ with st.sidebar:
     )
 
     st.markdown('<div class="sidebar-section">Serviciabilidad</div>', unsafe_allow_html=True)
-    Po = st.number_input("Serviciabilidad inicial (Po)", value=4.2)
+    Po = st.number_input("Serviciabilidad inicial (Po)", value=4.0)
 
     # ── Flexible adicionales ─────────────────
     if tipo_pavimento == "Pavimento Flexible":
-        Pf_flex = st.number_input("Serviciabilidad final (Pf)", value=2.2)
+        Pf_flex = st.number_input("Serviciabilidad final (Pf)", value=2.0)
 
         st.markdown('<div class="sidebar-section">Módulos resilientes</div>', unsafe_allow_html=True)
         Mr_subrasante = st.number_input("MR Subrasante (psi)", value=12000)
