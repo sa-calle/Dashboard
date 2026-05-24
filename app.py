@@ -332,7 +332,7 @@ with st.sidebar:
     st.markdown('<div class="sidebar-section">Tránsito y confiabilidad</div>', unsafe_allow_html=True)
     W_18 = st.number_input(
         "W₁₈ (ESAL)" if tipo_pavimento == "Pavimento Rígido" else "W₁₈",
-        value=6.0e6 if tipo_pavimento == "Pavimento Rígido" else 1.8e6,
+        value=2.84e+6 if tipo_pavimento == "Pavimento Rígido" else 2.84e+6,
         format="%.2e",
     )
 
