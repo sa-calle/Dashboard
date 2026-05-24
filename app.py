@@ -529,6 +529,11 @@ if tipo_pavimento == "Pavimento Flexible":
         "3 · Tablas de Referencia",
     ])
 
+    SN3 = calcular_sn(W_18, Zr_val, S0_val, dpsi, Mr_subrasante)
+    SN2 = calcular_sn(W_18, Zr_val, S0_val, dpsi, Mr_subbase)
+    SN1 = calcular_sn(W_18, Zr_val, S0_val, dpsi, Mr_base)
+
+
     # ── Tab 1: SN ─────────────────────────────
     with tab1:
         st.markdown('<div class="section-header">Números Estructurales Requeridos</div>',
