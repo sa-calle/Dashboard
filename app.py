@@ -285,12 +285,28 @@ h1, h2, h3 {
 }
 
 /* Expander override */
-.streamlit-expanderHeader {
+.streamlit-expanderHeader,
+[data-testid="stExpander"] summary,
+details > summary {
     font-family: 'IBM Plex Sans', sans-serif !important;
     font-size: 0.78rem !important;
+    font-weight: 500 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
-    color: #6B6459 !important;
+    color: #1C1C1E !important;
+    background-color: #EDEAE4 !important;
+    border: 1px solid #D0CBC2 !important;
+    border-radius: 4px !important;
+    padding: 0.65rem 1rem !important;
+}
+[data-testid="stExpander"] summary:hover,
+details > summary:hover {
+    background-color: #E0DBD3 !important;
+}
+[data-testid="stExpander"] summary p,
+[data-testid="stExpander"] summary span,
+[data-testid="stExpander"] summary * {
+    color: #1C1C1E !important;
 }
 
 /* KaTeX (fórmulas LaTeX) */
