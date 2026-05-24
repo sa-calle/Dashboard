@@ -383,9 +383,9 @@ with st.sidebar:
         Pf_flex = st.number_input("Serviciabilidad final (Pf)", value=2.0)
 
         st.markdown('<div class="sidebar-section">Módulos resilientes</div>', unsafe_allow_html=True)
-        Mr_subrasante = st.number_input("MR Subrasante (psi)", value=12000)
+        Mr_subrasante = st.number_input("MR Subrasante (psi)", value=11172)
         Mr_subbase    = st.number_input("MR Subbase (psi)",    value=15000)
-        Mr_base       = st.number_input("MR Base (psi)",       value=27000)
+        Mr_base       = st.number_input("MR Base (psi)",       value=28000)
         MR_asfalto    = st.number_input("MR Asfalto (psi)",    value=3.83e5, format="%.2e")
 
         st.markdown('<div class="sidebar-section">Drenaje</div>', unsafe_allow_html=True)
@@ -394,8 +394,8 @@ with st.sidebar:
         porcentaje = st.number_input("Saturación (%)", value=15.0)
         usar_manual = st.checkbox("Definir m₂ y m₃ manualmente")
         if usar_manual:
-            m2 = st.number_input("m₂", value=0.9)
-            m3 = st.number_input("m₃", value=0.9)
+            m2 = st.number_input("m₂", value=1.15)
+            m3 = st.number_input("m₃", value=1.15)
 
     # ── Rígido adicionales ───────────────────
     else:
