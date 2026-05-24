@@ -319,7 +319,41 @@ with st.sidebar:
         value=6.0e6 if tipo_pavimento == "Pavimento Rígido" else 1.8e6,
         format="%.2e",
     )
-    Zr_val = st.number_input("Confiabilidad (Zr)", value=-1.282)
+
+    # Tabla de confiabilidad → Zr (AASHTO 93)
+    _ZR_TABLE = {
+        50:    0.000,
+        60:   -0.253,
+        70:   -0.524,
+        75:   -0.674,
+        80:   -0.841,
+        85:   -1.037,
+        90:   -1.282,
+        95:   -1.645,
+        99:   -2.327,
+        99.9: -3.090,
+        99.99:-3.750,
+    }
+    _conf_options = list(_ZR_TABLE.keys())
+    _conf_labels  = [f"{r} %" for r in _conf_options]
+
+    conf_sel = st.selectbox(
+        "Confiabilidad R (%)",
+        options=_conf_options,
+        format_func=lambda r: f"{r} %",
+        index=6,          # 90 % por defecto → Zr = −1.282
+    )
+    Zr_val = _ZR_TABLE[conf_sel]
+
+    # Mostrar Zr derivado
+    st.markdown(
+        f'<div style="font-family:IBM Plex Mono,monospace; font-size:0.78rem; '
+        f'color:#E8E4DC; background:#2C2C2E; border:1px solid #3A3A3C; '
+        f'border-radius:4px; padding:0.45rem 0.8rem; margin-top:-0.3rem; margin-bottom:0.5rem;">'
+        f'Zr = <strong>{Zr_val:+.3f}</strong></div>',
+        unsafe_allow_html=True,
+    )
+
     S0_val = st.number_input(
         "Error estándar (S₀)",
         value=0.35 if tipo_pavimento == "Pavimento Rígido" else 0.45,
@@ -388,7 +422,8 @@ st.markdown(
 )
 st.markdown(
     f'<div class="dash-subtitle">Método AASHTO 1993 &nbsp;·&nbsp; '
-    f'W₁₈ = {W_18:.2e} ESAL &nbsp;·&nbsp; Zr = {Zr_val}</div>',
+    f'W₁₈ = {W_18:.2e} ESAL &nbsp;·&nbsp; '
+    f'R = {conf_sel} % &nbsp;→&nbsp; Zr = {Zr_val:+.3f}</div>',
     unsafe_allow_html=True,
 )
 st.markdown('<hr class="dash-divider">', unsafe_allow_html=True)
