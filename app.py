@@ -372,7 +372,7 @@ with st.sidebar:
 
     S0_val = st.number_input(
         "Error estándar (S₀)",
-        value=0.35 if tipo_pavimento == "Pavimento Rígido" else 0.45,
+        value=0.45 if tipo_pavimento == "Pavimento Rígido" else 0.45,
     )
 
     st.markdown('<div class="sidebar-section">Serviciabilidad</div>', unsafe_allow_html=True)
@@ -405,19 +405,19 @@ with st.sidebar:
 
         st.markdown('<div class="sidebar-section">Propiedades del concreto</div>',
                     unsafe_allow_html=True)
-        Modulo_rotura_MPa = st.number_input("Módulo de rotura (MPa)", value=4.2)
+        Modulo_rotura_MPa = st.number_input("Módulo de rotura (MPa)", value=4.5)
         Ec_psi_val        = st.number_input("Módulo de elasticidad Ec (psi)",
                                             value=3.6e6, format="%.2e")
         J_val             = st.number_input("Coef. transferencia de carga (J)", value=2.7)
 
         st.markdown('<div class="sidebar-section">Subrasante y drenaje</div>',
                     unsafe_allow_html=True)
-        k_val          = st.number_input("Módulo de reacción k (pci)", value=180)
+        k_val          = st.number_input("Módulo de reacción k (pci)", value=210)
         calidad_rigido = st.selectbox("Calidad de drenaje ",
                                       ["Excelente", "Bueno", "Regular", "Pobre", "Muy malo"],
                                       index=2)
         dias_lluvia    = st.number_input("Días de lluvia al año", value=200)
-        cd_val         = st.number_input("Coeficiente de drenaje (Cd)", value=0.9)
+        cd_val         = st.number_input("Coeficiente de drenaje (Cd)", value=1.15)
 
     st.markdown("---")
     st.markdown(
